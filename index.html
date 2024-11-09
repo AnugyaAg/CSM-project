@@ -1,42 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio Website - Programmergoutam</title>
+    <title>Login Page</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
 </head>
-<body>
-    <nav class="navbar">
-        <div class="logo">
-            <h1>Programmer</h1>
-        </div>
-        <div class="menu">
-            <a class="home" href="/">HOME</a>
-            <a href="#">ABOUT</a>
-            <a href="#">SKILLS</a>
-            <a href="#">CONTACT</a>
-        </div>
-    </nav>
-    <section class="hero-box">
-        <div class="txt-left">
-            <h3>Hello, It's Me</h3>
-            <h1>Anugya Agarwal</h1>
-            <h3 class="developer-txt">And I'm a <span style="color: cyan;">Developer</span></h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus aliquam nobis quidem?</p>
-            <div class="social-media">
-                <i class="fa-brands fa-facebook"></i>
-                <i class="fa-brands fa-instagram"></i>
-                <i class="fa-brands fa-github"></i>
-                <i class="fa-brands fa-linkedin"></i>
-            </div>
-            <button>Download CV</button>
-        </div>
 
-        <div class="img-right">
-           <img width="300px" height="300px" src="" alt="">
+<body ng-app="loginApp">
+    <div class="Container" ng-controller="loginController">
+
+        <h1>Welcome back!</h1>
+        <p>We're so excited to see you again!</p>
+        <form name="userForm">
+            <div class="input-field">
+                <label for="email">
+                    <h3> Email or Phone Number </h3>
+                </label>
+                <input type="text" id="email" name="email" ng-model="user.email" ng-pattern="/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/" required>
+                <div class="warning" ng-show="userForm.email.$invalid && userForm.email.$touched">
+                    Please enter a valid email address.
+                </div>
+            </div>
+            <div class="input-field">
+                <label for="password">
+                    <h3>Password</h3>
+                </label>
+                <input type="password" id="password" name="password" ng-model="user.password" required ng-minlength="8">
+                <div class="warning" ng-show="userForm.password.$invalid && userForm.password.$touched">
+                    Password must be at least 8 characters long.
+                </div>
+            </div>
+            <div class="forgot">
+                <a href="#" ng-click="forgotPassword()">Forgot your password?</a>
+            </div>
+            <button class="loginBtn" type="submit" ng-click="login()" ng-disabled="userForm.$invalid">Log In</button>
+
+        </form>
+        <p class="need-account" >Need an account? <a href="">Register</a></p>
+        <div class="qr">
+                <img src="logo2.jpg" height="300px" width="250px" alt="">
         </div>
-    </section>
+    </div>
+    <script>
+        angular.module('loginApp', [])
+            .controller('loginController', function($scope) {
+                $scope.user = {};
+                $scope.login = function() {
+                    
+                    console.log('Logging in with: ', $scope.user);
+                };
+            });
+           
+    var app = angular.module('loginApp', []);
+
+    app.controller('loginController', function($scope) {
+        $scope.user = {};
+
+        $scope.login = function() {
+            $scope.user = {};
+            $scope.userForm.$setPristine(); 
+            $scope.userForm.$setUntouched(); 
+        };
+    });
+</script>
+
+    </script>
 </body>
+
 </html>
